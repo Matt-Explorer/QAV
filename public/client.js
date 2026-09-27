@@ -6,8 +6,25 @@
 
 const ROOM_ID = 'main-room';
 
+// STUN discovers your public IP/port — enough for most Wi-Fi to Wi-Fi
+// connections. TURN is a relay server used when a direct route can't be
+// found (this is the common case for cellular/mobile data, which sits
+// behind carrier-grade NAT). Without TURN, calls involving a phone on
+// cellular data will often show your own camera but never the other
+// person's — the peer connection never actually completes.
+//
+// Get free TURN credentials in ~2 minutes at https://www.metered.ca/tools/openrelay/
+// (or run your own with coturn: https://github.com/coturn/coturn) and
+// paste them in below.
 const ICE_SERVERS = {
-  iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+  iceServers: [
+    { urls: 'stun:stun.l.google.com:19302' },
+    {
+      urls: 'turn:YOUR_TURN_HOST:3478',
+      username: 'YOUR_TURN_USERNAME',
+      credential: 'YOUR_TURN_CREDENTIAL'
+    }
+  ]
 };
 
 const QUOTES = [
