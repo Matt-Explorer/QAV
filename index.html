@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Video Call</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="join-screen" class="screen">
+    <div class="join-rail"></div>
+    <div class="join-content">
+      <span class="mono-tag">one room · always on</span>
+      <h1>Ready when you are.</h1>
+
+      <div class="console-readout">
+        <div class="readout-item">
+          <span class="readout-label">Local time</span>
+          <span id="clock" class="readout-value">--:--:--</span>
+        </div>
+        <div class="readout-item">
+          <span class="readout-label">Weather</span>
+          <span id="weather" class="readout-value">Locating…</span>
+        </div>
+      </div>
+
+      <p id="quote" class="quote"></p>
+
+      <button id="join-btn">
+        <span>Join the call</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <p id="join-error" class="join-error hidden"></p>
+    </div>
+  </div>
+
+  <div id="call-screen" class="screen hidden">
+    <header id="call-header">
+      <div class="room-info">
+        <span class="live-dot"></span>
+        <span class="mono-pill" id="room-code"><span id="room-code-label">the call</span></span>
+      </div>
+      <div class="call-meta">
+        <span id="participant-count" class="mono-label">1 in call</span>
+        <span id="call-timer" class="mono-label">00:00</span>
+      </div>
+    </header>
+
+    <div id="video-grid"></div>
+
+    <div id="controls">
+      <button id="toggle-mic-btn" class="ctrl-btn" title="Mute/unmute">
+        <svg class="icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Z" stroke="currentColor" stroke-width="1.6"/><path d="M6 11v1a6 6 0 0 0 12 0v-1M12 18v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <svg class="icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-5.7-1.3M9 9v3a3 3 0 0 0 4.2 2.75" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M6 11v1a6 6 0 0 0 9.3 5M18 12v-1M12 18v3M3 3l18 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <button id="toggle-cam-btn" class="ctrl-btn" title="Camera on/off">
+        <svg class="icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="12" height="12" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M15 10.5 20.5 7v10L15 13.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <svg class="icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 9v6a3 3 0 0 0 3 3h4M15 8.4V8.5a2.5 2.5 0 0 0-2.5-2.5H6.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M15 10.5 20.5 7v10L15 13.5M3 3l18 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button id="leave-btn" title="Leave call">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-2M10 12h11m0 0-3.5-3.5M21 12l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="rotate(180 12 12)"/></svg>
+        <span>Leave</span>
+      </button>
+    </div>
+  </div>
+
+  <template id="video-tile-template">
+    <div class="video-tile">
+      <video autoplay playsinline></video>
+      <div class="avatar-fallback"><span class="avatar-initials"></span></div>
+      <span class="status-dot connecting"></span>
+      <span class="label"></span>
+    </div>
+  </template>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>

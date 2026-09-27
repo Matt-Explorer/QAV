@@ -1,0 +1,13 @@
+{
+  "name": "simple-video-call",
+  "version": "1.0.0",
+  "description": "Simplest web-based 1:1 and group video call app using WebRTC + Socket.io signaling",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  }
+}
